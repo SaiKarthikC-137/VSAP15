@@ -6,15 +6,15 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 @Entity
 @Table(name = "usermodel")
 public class UserModel {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
     private String email;
     private String password;
@@ -22,9 +22,9 @@ public class UserModel {
     private String mobileNumber;
     private Boolean active;
     private String role;
-    @OneToOne(cascade = CascadeType.ALL)
-    private CartModel cart;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "userId")
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "userId",orphanRemoval = true)
+    private List<CartModel> cartItems;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "userId",orphanRemoval = true)
     private List<OrderModel> ordersList;
 
 
@@ -38,13 +38,14 @@ public class UserModel {
         this.username = username;
         this.mobileNumber = mobileNumber;
         ordersList=new ArrayList<>();
+        cartItems=new ArrayList<>();
     }
 
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
     public String getEmail() {
@@ -83,8 +84,8 @@ public class UserModel {
     public void setRole(String role) {
         this.role = role;
     }
-    public CartModel getCart() {
-        return cart;
+    public List<CartModel> getCart() {
+        return cartItems;
     }
     public List<OrderModel> getOrdersList() {
         return ordersList;

@@ -4,11 +4,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "productmodel")
 public class ProductModel {
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String productId;
     private String imageUrl;
     private String productName;

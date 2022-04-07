@@ -1,35 +1,34 @@
 package com.vsap.fantasydress.models;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "ordermodel")
 public class OrderModel {
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String orderId;
-    @ManyToOne(cascade = CascadeType.ALL)
-    private UserModel userId;
-    private String ProductName;
+    private Integer userId;
+    private String productName;
     private int quantity;
     private String totalPrice;
-    private String Status;
-    private String Price;
+    private String status;
+    private String price;
     public OrderModel() {
     }
-    public OrderModel(String orderId, UserModel userId, String productName, int quantity, String totalPrice, String status,
+    public OrderModel(Integer userId, String productName, int quantity, String totalPrice, String status,
             String price) {
-        this.orderId = orderId;
         this.userId = userId;
-        ProductName = productName;
+        this.productName = productName;
         this.quantity = quantity;
         this.totalPrice = totalPrice;
-        Status = status;
-        Price = price;
+        this.status = status;
+        this.price = price;
     }
     public String getOrderId() {
         return orderId;
@@ -37,17 +36,17 @@ public class OrderModel {
     public void setOrderId(String orderId) {
         this.orderId = orderId;
     }
-    public UserModel getUserId() {
+    public Integer getUserId() {
         return userId;
     }
-    public void setUserId(UserModel userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
     public String getProductName() {
-        return ProductName;
+        return productName;
     }
     public void setProductName(String productName) {
-        ProductName = productName;
+        this.productName = productName;
     }
     public int getQuantity() {
         return quantity;
@@ -62,15 +61,15 @@ public class OrderModel {
         this.totalPrice = totalPrice;
     }
     public String getStatus() {
-        return Status;
+        return status;
     }
     public void setStatus(String status) {
-        Status = status;
+        this.status = status;
     }
     public String getPrice() {
-        return Price;
+        return price;
     }
     public void setPrice(String price) {
-        Price = price;
+        this.price = price;
     }
 }

@@ -16,8 +16,8 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public void addUser(UserModel user) {
-        userRepository.save(user);
+    public boolean addUser(UserModel user) {
+        return userRepository.save(user)!=null;
     }
 
     public Optional<UserModel> getUser(Integer id) {
@@ -28,5 +28,9 @@ public class UserService {
         List<UserModel> users=new ArrayList<>();
         userRepository.findAll().forEach(users::add);
         return users;
+    }
+
+    public List<UserModel> getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }
